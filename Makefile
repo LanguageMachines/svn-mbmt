@@ -23,13 +23,13 @@ mbmt-decode.o:	mbmt-decode.c
 	$(CC) $(C_ARGS) -c $<
 
 mbmt-decode:	mbmt-decode.o sockhelp.o
-	$(CC)  $(C_ARGS) -o $@ $^ $(C_LINK)
+	$(CC) $(C_ARGS) -o $@ $^ $(C_LINK)
 
 mbmt-create-training:
-	$(CC)  $(C_ARGS) -o $@ mbmt-create-training.c
+	$(CC) $(C_ARGS) -o $@ mbmt-create-training.c
 
 mbmt-create-test:
-	$(CC)  $(C_ARGS) -o $@ mbmt-create-test.c
+	$(CC) $(C_ARGS) -o $@ mbmt-create-test.c
 
 clean:
 	rm -rf *.o mbmt-decode mbmt-create-training mbmt-create-test

@@ -18,7 +18,6 @@
 #define DEBUG 1
 #define DEBUG2 0
 #define DEBUG3 0
-#define FILEWOPR 0
 #define MAXSENT 2048
 #define WORDLEN 256
 #define FEATANDCLASS 4
@@ -30,6 +29,7 @@
 #define LIMIT 10 // 10 - patience
 #define LIMIT2 1000 // 1000 - nr attempts
 #define LIMIT3 100 // 100
+#define USEWOPR 0 // use WOPR or not
 
 #define MACHINE "localhost"
 #define PORT      "1982"
@@ -40,10 +40,9 @@ char  *buffer;
 int main(int argc, char *argv[])
 {
   float wopr(char *woprstring, int woprsock);
-  void  bigwopr(char *woprstring, int woprsock);
   void  timer(void);
 
-  FILE  *bron,*woprfile;
+  FILE  *bron;
   char  **superout;
   char  features[32][2048];
   char  ****classes;
@@ -59,6 +58,7 @@ int main(int argc, char *argv[])
   int   *starters;
   int   *followers;
   float *followerscore;
+  float followertotal,ddice;
   float *followerstart;
   float *followerend;
   char  *done;
@@ -73,12 +73,10 @@ int main(int argc, char *argv[])
   char  **towopr;
   char  class[2048];
   char  prevclass[2048];
-  char  bigwoprcommand[1024];
   char  *rest,*rest2,*part;
   int   i,j,k,l,nrinst=0,trigger=0,sock=0;
   int   thisnroverlap,nroverlap,counter,counter2,counter3,nrfollowers,chosen,nrattempted;
   int   diff=0,outputlen,bestlen,supercount=0,thislength,nrtowopr;
-  float followertotal,ddice,thisperplex;
   char  ready=0,found,seen;
   float perplex,bestperplex;
 
@@ -159,8 +157,11 @@ int main(int argc, char *argv[])
     }
 
   /* start up communications with the WOPR server */
-  ignore_pipe();
-  sock=make_connection(PORT,SOCK_STREAM,MACHINE);
+  if (USEWOPR)
+    {
+      ignore_pipe();
+      sock=make_connection(PORT,SOCK_STREAM,MACHINE);
+    }
 
   // open trigram predictions
   bron=fopen(argv[1],"r");
@@ -401,7 +402,7 @@ int main(int argc, char *argv[])
 			
 			if (nrfollowers>1)
 			  {
-			    // making a random choice, weighted by score
+			    // making a random choice, weighted by score (works best)
 			    followertotal=0.0;
 			    for (i=0; i<nrfollowers; i++)
 			      {
@@ -418,12 +419,10 @@ int main(int argc, char *argv[])
 				done[overtab[followers[i]][0]]=1;
 			      }
 			    ddice=followertotal*drand48();
-			    
 			    i=0;
 			    while (!((ddice>followerstart[i])&&
 				     (ddice<=followerend[i])))
 			      i++;
-			    
 			    chosen=followers[i];
 
 			    // making an unweighted random choice
@@ -432,7 +431,7 @@ int main(int argc, char *argv[])
 			    chosen=followers[chosennr];
 			    */
 			   
-			    // just take the highest score (works best so far)
+			    // just take the highest score
 			    /*
 			    maxscore=0.0;
 			    maxnr=0;
@@ -729,62 +728,56 @@ int main(int argc, char *argv[])
 			attemptedlength[nrattempted]=thislength;
 			nrattempted++;
 			
-			if (FILEWOPR)
+			// normal perplex directly to wopr
+			sprintf(woprsentence,"<s> %s </s>\n",
+				sentence);
+			if (USEWOPR)
+			  perplex=wopr(woprsentence,sock);
+			else
+			  perplex=1.0;
+			    
+			if (DEBUG3)
+			  fprintf(stderr,"      unseen, with perplexity %f\n",
+				  perplex);
+			
+			// English sentences have 15% more words than Dutch sentences
+			if (CORRECTFORLENGTHDIFF)
 			  {
-			    // towopr
-			    strcpy(towopr[nrtowopr],sentence);
-			    nrtowopr++;
+			    if ((1.15*nrinst)>(1.*supercount))
+			      perplex*=((1.15*nrinst)/(1.*supercount));
+			    else
+			      perplex*=((1.*supercount)/(1.15*nrinst));
+			  }
+			
+			if (perplex<bestperplex)
+			  {
+			    counter=0;
+			    bestperplex=perplex;
+			    strcpy(bestsentence,sentence);
+			    if (DEBUG)
+			      {
+				fprintf(stderr,"current lowest perplexity: %f, length %d, at round %d\n",
+					bestperplex,outputlen,counter2);
+				fprintf(stderr,"       >>> %s",
+					bestsentence);
+			      }
+			    for (i=0; i<outputlen; i++)
+			      for (j=0; j<3; j++)
+				strcpy(beststring[i][j],outputstring[i][j]);
+			    bestlen=outputlen;
+			    
+			    if (DEBUG2)
+			      {
+				fprintf(stderr,"current best seq [%f]:",
+					bestperplex);
+				for (i=0; i<bestlen; i++)
+				  fprintf(stderr," [%s]-[%s]-[%s]",
+					  beststring[i][0],beststring[i][1],beststring[i][2]);
+				fprintf(stderr,"\n");
+			      }
 			  }
 			else
-			  {
-			    // normal perplex directly to wopr
-			    sprintf(woprsentence,"<s> %s </s>\n",
-				    sentence);
-			    perplex=wopr(woprsentence,sock);
-			    
-			    if (DEBUG3)
-			      fprintf(stderr,"      unseen, with perplexity %f\n",
-				      perplex);
-			    
-			    // English sentences have 15% more words than Dutch sentences
-			    if (CORRECTFORLENGTHDIFF)
-			      {
-				if ((1.15*nrinst)>(1.*supercount))
-				  perplex*=((1.15*nrinst)/(1.*supercount));
-				else
-				  perplex*=((1.*supercount)/(1.15*nrinst));
-			      }
-			    
-			    if (perplex<bestperplex)
-			      {
-				counter=0;
-				bestperplex=perplex;
-				strcpy(bestsentence,sentence);
-				if (DEBUG)
-				  {
-				    fprintf(stderr,"current lowest perplexity: %f, length %d, at round %d\n",
-					    bestperplex,outputlen,counter2);
-				    fprintf(stderr,"       >>> %s",
-					    bestsentence);
-				  }
-				for (i=0; i<outputlen; i++)
-				  for (j=0; j<3; j++)
-				    strcpy(beststring[i][j],outputstring[i][j]);
-				bestlen=outputlen;
-				
-				if (DEBUG2)
-				  {
-				    fprintf(stderr,"current best seq [%f]:",
-					    bestperplex);
-				    for (i=0; i<bestlen; i++)
-				      fprintf(stderr," [%s]-[%s]-[%s]",
-					      beststring[i][0],beststring[i][1],beststring[i][2]);
-				    fprintf(stderr,"\n");
-				  }
-			      }
-			    else
-			      counter++;
-			  }
+			  counter++;
 		      }
 		    else
 		      {
@@ -802,33 +795,6 @@ int main(int argc, char *argv[])
 		      fprintf(stderr,"counter reached limit count %d\n",
 			      LIMIT);
 		    ready=1;
-		  }
-	      }
-
-	    if (FILEWOPR)
-	      {
-		// write woprfile
-		woprfile=fopen("/tmp/wopr-sents","w");
-		for (i=0; i<nrtowopr; i++)
-		  fprintf(woprfile,"%s",towopr[i]);
-		fclose(woprfile);
-		
-		// send to wopr
-		strcpy(bigwoprcommand,"file:/tmp/wopr-sents");
-		bigwopr(bigwoprcommand,sock);
-		
-		// read back
-		bestperplex=99999.99;
-		woprfile=fopen("/tmp/wopr-sents.wopr","r");
-		for (i=0; i<nrtowopr; i++)
-		  {
-		    fscanf(woprfile,"%f ",
-			   &thisperplex);
-		    if (thisperplex<bestperplex)
-		      {
-			bestperplex=thisperplex;
-			strcpy(bestsentence,towopr[i]);
-		      }
 		  }
 	      }
 
@@ -1057,31 +1023,4 @@ float wopr(char *woprstring, int woprsock)
     }
 
   return perplex;
-}
-
-void bigwopr(char *woprstring, int woprsock)
-{
-  if (woprsock==-1)
-    {
-      fprintf(stderr,"WOPR server is not responding; aborting.\n\n");
-      exit(1);
-    }
-  
-  if (strlen(woprstring)<2)
-    strcpy(woprstring,"file:/tmp/woprsents\n");
-
-  if (DEBUG3)
-    fprintf(stderr,"sending to WOPR: %s\n",
-	    woprstring);
-			
-  /* throw the instance at the socket */
-  sock_puts(woprsock,woprstring);
-
-  strcpy(buffer,"");
-  /* get the TiMBL server output back */
-  sock_gets(woprsock,buffer,BUFFERSIZE);
-
-  if (DEBUG2)
-    fprintf(stderr,"got back from WOPR: %s\n",
-	    buffer);
 }
