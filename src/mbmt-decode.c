@@ -1,8 +1,12 @@
-/** decode-tribl - Antal, Feb 2008
+/** mbmt-decode
+
+    Antal van den Bosch - Antal.vdnBosch@uvt.nl - Dec 2008
+    ILK Research Group, Tilburg centre for Creative Computing
+    Tilburg University
 
     a rewrite of older decode code from Summer of 2006 and onwards
 
-    syntax: decode-mbmt <TRIBL2 +vdb+di tri output>
+    syntax: mbmt-decode <IGTree +vdb+di tri output>
 
 */
 
@@ -15,7 +19,7 @@
 #include<time.h>
 
 #define BEAM 1 // the beam on the beam. Best: 1, or higher with sparser data
-#define DEBUG 1
+#define DEBUG 0
 #define DEBUG2 0
 #define DEBUG3 0
 #define MAXSENT 2048
@@ -83,6 +87,9 @@ int main(int argc, char *argv[])
   srand48(24101997);
   setbuf(stdout,NULL);
   
+  if (DEBUG)
+    fprintf(stderr,"mbmt-decode 0.1 ** ILK Research Group, Tilburg University\n");
+
   strcpy(prevclass,"");
 
   rest=malloc(100000000*sizeof(char));

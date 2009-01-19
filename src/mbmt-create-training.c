@@ -25,7 +25,7 @@ int main(int argc, char *argv[])
   int  i,j,k,l,sl,tl;
   long double as;
   
-  fprintf(stderr,"make-trigrams-from-giza, Antal, Aug 2007\n");
+  // fprintf(stderr,"make-trigrams-from-giza, Antal, Aug 2007\n");
 
   setbuf(stdout,NULL);
 

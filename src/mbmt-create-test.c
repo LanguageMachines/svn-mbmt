@@ -15,7 +15,7 @@ int main(int argc, char *argv[])
   char words[1024][1024];
   int  i,nrwords;
   
-  fprintf(stderr,"make-trigrams-from-txt, Antal, Jun 2008\n");
+  // fprintf(stderr,"make-trigrams-from-txt, Antal, Jun 2008\n");
 
   setbuf(stdout,NULL);
 
