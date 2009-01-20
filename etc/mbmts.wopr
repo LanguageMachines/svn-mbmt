@@ -1,0 +1,16 @@
+msg: --------------
+msg: Script for MTM
+msg: --------------
+#
+params: ibasefile:JRC-Acquis.sample.A3.final.tar.txt.ws3.hpx5.ibase
+params: lexicon:JRC-Acquis.sample.A3.final.tar.txt.lex
+params: hpx:5
+params: ws:3
+# output 0=pplx only, 1=full
+params: output: 0
+#sentence 1=wrap <s></s> around input
+params: sentence:0
+params: port:1982
+params: timbl:-a1 +D
+#
+run: server2

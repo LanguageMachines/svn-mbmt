@@ -1,0 +1,14 @@
+msg: --------------
+msg: Script for MTM
+msg: --------------
+#
+#params: filename:JRC-Acquis.sample.A3.final.tar.txt
+params: hpx:5
+params: ws:3
+params: timbl:-a1 +D
+#
+run: lexicon
+run: window_s
+run: hapax
+run: make_ibase
+

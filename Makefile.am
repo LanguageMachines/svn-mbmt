@@ -20,8 +20,8 @@ mbmt_decode_SOURCES = \
 	src/sockhelp.h \
 	src/mbmt-decode.c
 
-#man_MANS = man/peter.1 man/pcmd.1 man/otpcmd.1
-
-#EXTRA_DIST = \
-#	$(man_MANS) 
+EXTRA_DIST = \
+	etc/mbmt.sh \
+	etc/mbmtt.wopr \
+	etc/mbmts.wopr 
 
