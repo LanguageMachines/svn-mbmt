@@ -37,8 +37,7 @@ bin_PROGRAMS = mbmt-create-test$(EXEEXT) mbmt-create-training$(EXEEXT) \
 subdir = .
 DIST_COMMON = README $(am__configure_deps) $(srcdir)/Makefile.am \
 	$(srcdir)/Makefile.in $(top_srcdir)/configure AUTHORS COPYING \
-	ChangeLog INSTALL NEWS compile depcomp install-sh ltmain.sh \
-	missing
+	ChangeLog INSTALL NEWS compile depcomp install-sh missing
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/configure.in
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
@@ -89,12 +88,12 @@ DIST_ARCHIVES = $(distdir).tar.gz
 GZIP_ENV = --best
 distuninstallcheck_listfiles = find . -type f -print
 distcleancheck_listfiles = find . -type f -print
-ACLOCAL = ${SHELL} /exp/antalb/sources/Mbmt/missing --run aclocal-1.10
-AMTAR = ${SHELL} /exp/antalb/sources/Mbmt/missing --run tar
-AUTOCONF = ${SHELL} /exp/antalb/sources/Mbmt/missing --run autoconf
-AUTOHEADER = ${SHELL} /exp/antalb/sources/Mbmt/missing --run autoheader
-AUTOMAKE = ${SHELL} /exp/antalb/sources/Mbmt/missing --run automake-1.10
-AWK = mawk
+ACLOCAL = ${SHELL} /Users/pberck/prog/trunk/sources/Mbmt/missing --run aclocal-1.10
+AMTAR = ${SHELL} /Users/pberck/prog/trunk/sources/Mbmt/missing --run tar
+AUTOCONF = ${SHELL} /Users/pberck/prog/trunk/sources/Mbmt/missing --run autoconf
+AUTOHEADER = ${SHELL} /Users/pberck/prog/trunk/sources/Mbmt/missing --run autoheader
+AUTOMAKE = ${SHELL} /Users/pberck/prog/trunk/sources/Mbmt/missing --run automake-1.10
+AWK = awk
 CC = gcc
 CCDEPMODE = depmode=gcc3
 CFLAGS = -g -O2
@@ -102,8 +101,8 @@ CPPFLAGS =
 CYGPATH_W = echo
 DEFS = -DPACKAGE_NAME=\"mbmt\" -DPACKAGE_TARNAME=\"mbmt\" -DPACKAGE_VERSION=\"0.1\" -DPACKAGE_STRING=\"mbmt\ 0.1\" -DPACKAGE_BUGREPORT=\"\" -DPACKAGE=\"mbmt\" -DVERSION=\"0.1\"
 DEPDIR = .deps
-ECHO_C = 
-ECHO_N = -n
+ECHO_C = \c
+ECHO_N = 
 ECHO_T = 
 EXEEXT = 
 INSTALL = /usr/bin/install -c
@@ -115,8 +114,8 @@ LDFLAGS =
 LIBOBJS = 
 LIBS = 
 LTLIBOBJS = 
-MAKEINFO = ${SHELL} /exp/antalb/sources/Mbmt/missing --run makeinfo
-MKDIR_P = /bin/mkdir -p
+MAKEINFO = ${SHELL} /Users/pberck/prog/trunk/sources/Mbmt/missing --run makeinfo
+MKDIR_P = ./install-sh -c -d
 OBJEXT = o
 PACKAGE = mbmt
 PACKAGE_BUGREPORT = 
@@ -129,10 +128,10 @@ SET_MAKE =
 SHELL = /bin/sh
 STRIP = 
 VERSION = 0.1
-abs_builddir = /exp/antalb/sources/Mbmt
-abs_srcdir = /exp/antalb/sources/Mbmt
-abs_top_builddir = /exp/antalb/sources/Mbmt
-abs_top_srcdir = /exp/antalb/sources/Mbmt
+abs_builddir = /Users/pberck/prog/trunk/sources/Mbmt
+abs_srcdir = /Users/pberck/prog/trunk/sources/Mbmt
+abs_top_builddir = /Users/pberck/prog/trunk/sources/Mbmt
+abs_top_srcdir = /Users/pberck/prog/trunk/sources/Mbmt
 ac_ct_CC = gcc
 am__include = include
 am__leading_dot = .
@@ -151,16 +150,16 @@ host_alias =
 htmldir = ${docdir}
 includedir = ${prefix}/include
 infodir = ${datarootdir}/info
-install_sh = $(SHELL) /exp/antalb/sources/Mbmt/install-sh
+install_sh = $(SHELL) /Users/pberck/prog/trunk/sources/Mbmt/install-sh
 libdir = ${exec_prefix}/lib
 libexecdir = ${exec_prefix}/libexec
 localedir = ${datarootdir}/locale
 localstatedir = ${prefix}/var
 mandir = ${datarootdir}/man
-mkdir_p = /bin/mkdir -p
+mkdir_p = $(top_builddir)/./install-sh -c -d
 oldincludedir = /usr/include
 pdfdir = ${docdir}
-prefix = /exp/antalb
+prefix = /usr/local
 program_transform_name = s,x,x,
 psdir = ${docdir}
 sbindir = ${exec_prefix}/sbin
@@ -184,6 +183,11 @@ mbmt_decode_SOURCES = \
 	src/sockhelp.c \
 	src/sockhelp.h \
 	src/mbmt-decode.c
+
+EXTRA_DIST = \
+	etc/mbmt.sh \
+	etc/mbmtt.wopr \
+	etc/mbmts.wopr 
 
 all: all-am
 
@@ -590,11 +594,6 @@ uninstall-am: uninstall-binPROGRAMS
 	mostlyclean-generic pdf pdf-am ps ps-am tags uninstall \
 	uninstall-am uninstall-binPROGRAMS
 
-
-#man_MANS = man/peter.1 man/pcmd.1 man/otpcmd.1
-
-#EXTRA_DIST = \
-#	$(man_MANS) 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.
 .NOEXPORT:

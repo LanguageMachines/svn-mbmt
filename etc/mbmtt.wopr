@@ -2,7 +2,7 @@ msg: --------------
 msg: Script for MTM
 msg: --------------
 #
-#params: filename:JRC-Acquis.sample.A3.final.tar.txt
+params: filename:JRC-Acquis.sample.A3.final.tar.txt
 params: hpx:5
 params: ws:3
 params: timbl:-a1 +D

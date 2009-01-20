@@ -38,9 +38,11 @@ else
     mbmt-0.1/mbmt-tar-from-A3 $1
 
     # preparation 3: WOPR creates language model
-    #                                       /dev/null 2>&1 &
-    wopr -s mbmtt.wopr -p filename:$2 >> wopr.out 2>&1 
-    wopr -s mbmts.wopr                >> wopr.out 2>&1 &
+    #
+    echo Training LM
+    wopr -s mbmtt.wopr >> /dev/null 2>&1 
+    echo Starting LM server
+    wopr -s mbmts.wopr >> /dev/null 2>&1 &
 
     # preparation 4: test material is converted
     mbmt-0.1/mbmt-create-test $2 > $2.111.inst
