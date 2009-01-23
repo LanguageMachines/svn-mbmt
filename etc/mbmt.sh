@@ -58,6 +58,6 @@ else
 
     # cleanup
     echo Clean up
-    rm -f $1.111.inst $2.111.inst $2.111.inst.out > /dev/null 2>&1
+    rm -f $1.111.inst $1.tar.txt $1.tar.txt.ws3 $2.111.inst $2.111.inst.out > /dev/null 2>&1
 
 fi
