@@ -32,10 +32,10 @@ else
     echo preparing data...
 
     # preparation 1: create training data for translation model
-    mbmt-0.1/mbmt-create-training $1 > $1.111.inst
+    mbmt-create-training $1 > $1.111.inst
 
     # preparation 2: create training data for language model
-    mbmt-0.1/mbmt-tar-from-A3 $1
+    mbmt-tar-from-A3 $1
 
     # preparation 3: WOPR creates language model
     #
@@ -45,16 +45,19 @@ else
     wopr -s mbmts.wopr >> /dev/null 2>&1 &
 
     # preparation 4: test material is converted
-    mbmt-0.1/mbmt-create-test $2 > $2.111.inst
+    echo Create test data
+    mbmt-create-test $2 > $2.111.inst
 
     # training and testing
     echo training and testing
     Timbl -f $1.111.inst -I $1.111.inst.ibase -a1 +vdb+di +D -Beam=1 -t $2.111.inst -o $2.111.inst.out > /dev/null 2>&1
 
     # decoding
+    echo Decoding
     mbmt-decode $2.111.inst.out > $2.out
 
     # cleanup
+    echo Clean up
     rm -f $1.111.inst $2.111.inst $2.111.inst.out > /dev/null 2>&1
 
 fi

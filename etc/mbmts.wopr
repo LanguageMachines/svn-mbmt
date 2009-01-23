@@ -2,9 +2,9 @@ msg: --------------
 msg: Script for MTM
 msg: --------------
 #
-params: ibasefile:JRC-Acquis.sample.A3.final.tar.txt.ws3.hpx5.ibase
+params: ibasefile:JRC-Acquis.sample.A3.final.tar.txt.ws3.ibase
 params: lexicon:JRC-Acquis.sample.A3.final.tar.txt.lex
-params: hpx:5
+#params: hpx:5
 params: ws:3
 # output 0=pplx only, 1=full
 params: output: 0

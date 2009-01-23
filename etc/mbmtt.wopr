@@ -9,6 +9,6 @@ params: timbl:-a1 +D
 #
 run: lexicon
 run: window_s
-run: hapax
+#run: hapax
 run: make_ibase
 
