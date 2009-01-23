@@ -1,8 +1,10 @@
 Mbmt 0.1 (c) ILK 2008
 
 Memory-based Machine Translation
+http://ilk.uvt.nl/mbmt
 
-Induction of Linguistic Knowledge Research Group
+Induction of Linguistic Knowledge Research Group,
+Tilburg centre for Creative Computing @ Tilburg University
 
 This is the first release of Mbmt. It is pretty much a Beta version;
 it may still contain some bugs or behave not exactly as documented or
@@ -14,6 +16,7 @@ Mbmt is distributed under the GNU Public Licence (see the file COPYING).
 
 This software has been tested on:
 - Intel platform running several versions of Linux
+- AMD64 platform running gentoo and debian Linux
 - Macs running Mac OS X 10.5
 
 Compilers:
@@ -24,4 +27,5 @@ Contents of this distribution:
 - Licensing information ( COPYING )
 - Installation instructions ( INSTALL )
 
+Enjoy!
 

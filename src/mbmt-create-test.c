@@ -1,4 +1,29 @@
-/* make-trigrams-from-giza */
+/*
+  Copyright (c) 2006 - 2009
+  Antal van den Bosch
+  ILK Research Group, Tilburg centre for Creative Computing
+  Tilburg University
+ 
+  This file is part of Mbmt
+
+  Mbmt is free software; you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation; either version 3 of the License, or
+  (at your option) any later version.
+
+  Mbmt is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License
+  along with this program; if not, see <http://www.gnu.org/licenses/>.
+
+  For questions and suggestions, see:
+      http://ilk.uvt.nl/mbmt
+  or send mail to:
+      Timbl@uvt.nl
+*/
 
 #include<stdio.h>
 #include<stdlib.h>

@@ -1,13 +1,28 @@
-/** mbmt-decode
+/*
+  Copyright (c) 2006 - 2009
+  Antal van den Bosch
+  ILK Research Group, Tilburg centre for Creative Computing
+  Tilburg University
 
-    Antal van den Bosch - Antal.vdnBosch@uvt.nl - Dec 2008
-    ILK Research Group, Tilburg centre for Creative Computing
-    Tilburg University
+  This file is part of Mbmt
 
-    a rewrite of older decode code from Summer of 2006 and onwards
+  Mbmt is free software; you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation; either version 3 of the License, or
+  (at your option) any later version.
 
-    syntax: mbmt-decode <IGTree +vdb+di tri output>
+  Mbmt is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
 
+  You should have received a copy of the GNU General Public License
+  along with this program; if not, see <http://www.gnu.org/licenses/>.
+
+  For questions and suggestions, see:
+      http://ilk.uvt.nl/mbmt
+  or send mail to:
+      Timbl@uvt.nl
 */
 
 #include<stdio.h>
@@ -33,7 +48,7 @@
 #define LIMIT 10 // 10 - patience
 #define LIMIT2 1000 // 1000 - nr attempts
 #define LIMIT3 100 // 100
-#define USEWOPR 0 // use WOPR or not
+#define USEWOPR 1 // use WOPR or not
 
 #define MACHINE "localhost"
 #define PORT      "1982"
@@ -736,7 +751,7 @@ int main(int argc, char *argv[])
 			nrattempted++;
 			
 			// normal perplex directly to wopr
-			sprintf(woprsentence,"<s> %s </s>\n",
+			sprintf(woprsentence,"%s\n",
 				sentence);
 			if (USEWOPR)
 			  perplex=wopr(woprsentence,sock);
