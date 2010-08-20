@@ -50,7 +50,7 @@ else
 
     # training and testing
     echo training and testing
-    Timbl -f $1.111.inst -I $1.111.inst.ibase -a1 +vdb+di +D -Beam=1 -t $2.111.inst -o $2.111.inst.out > /dev/null 2>&1
+    Timbl -f $1.111.inst -I $1.111.inst.ibase -a1 +vdb+di +D --Beam=1 -t $2.111.inst -o $2.111.inst.out > /dev/null 2>&1
 
     # decoding
     echo Decoding
