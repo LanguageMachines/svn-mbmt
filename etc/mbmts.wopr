@@ -2,7 +2,7 @@ msg: --------------
 msg: Script for MTM
 msg: --------------
 #
-params: ibasefile:JRC-Acquis.sample.A3.final.tar.txt.ws3.ibase
+params: ibasefile:JRC-Acquis.sample.A3.final.tar.txt.ws3_-a1+D.ibase
 params: lexicon:JRC-Acquis.sample.A3.final.tar.txt.lex
 #params: hpx:5
 params: ws:3
